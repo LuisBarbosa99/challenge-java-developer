@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
-import java.net.http.HttpResponse;
 
 import static org.springframework.http.ResponseEntity.created;
 
@@ -26,7 +25,7 @@ public class ClientController {
     @PostMapping
     public ResponseEntity<Void> save(@RequestBody NeurotechClient form) {
         String id = clientService.save(form);
-        URI uri = URI.create(String.format("http://localhost:8080/client/%s", id));
+        URI uri = URI.create(String.format("http://localhost:5000/client/%s", id));
         return created(uri)
                 .build();
     }
