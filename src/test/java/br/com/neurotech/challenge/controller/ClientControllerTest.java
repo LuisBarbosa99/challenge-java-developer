@@ -47,6 +47,17 @@ public class ClientControllerTest {
                 .andExpect(header().string("Location", STR."http://localhost:5000/client/\{id}"));
     }
 
+    @Test
+    public void givenClientController_whenGet_thenReturnOk() throws Exception {
+        var client = this.getClient();
+        var id = "1";
+        Mockito.when(clientService.get(id))
+                .thenReturn(client);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/client/{id}", id))
+                .andExpect(status().isOk());
+    }
+
     private NeurotechClient getClient() {
         var client = new NeurotechClient();
         client.setName("João das Neves");
