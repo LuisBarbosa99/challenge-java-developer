@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,7 +43,7 @@ public class ClientController {
             @ApiResponse(responseCode = "400", description = "Erro ao cadastrar cliente.")
     })
     @PostMapping
-    public ResponseEntity<Void> save(@RequestBody NeurotechClient form) {
+    public ResponseEntity<Void> save(@RequestBody @Valid NeurotechClient form) {
         String id = clientService.save(form);
         var uri = URI.create(STR."http://localhost:5000/client/\{id}");
         return created(uri)
@@ -65,10 +66,6 @@ public class ClientController {
     })
     @GetMapping("/{id}")
     public ResponseEntity<NeurotechClient> get(@PathVariable String id) {
-        try {
-            return ok(clientService.get(id));
-        } catch (ClientNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+        return ok(clientService.get(id));
     }
 }

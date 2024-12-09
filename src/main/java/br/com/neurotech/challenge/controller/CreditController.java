@@ -57,16 +57,10 @@ public class CreditController {
                             mediaType = "application/json",
                             schema = @Schema(implementation = ErrorDTO.class)
             )),
+            @ApiResponse(responseCode = "404", description = "Cliente não encontrado.")
     })
     @GetMapping
     public ResponseEntity<?> checkCredit(@RequestParam String clientId, @RequestParam String model) {
-        try {
-            return ok()
-                    .body(creditService.checkCredit(clientId, VehicleModel.valueOf(model)));
-        } catch (ClientNotFoundException e) {
-            return badRequest().body(new ErrorDTO(CLIENT_NOT_FOUND, e.getMessage()));
-        } catch (IllegalArgumentException e) {
-            return internalServerError().build();
-        }
+        return ok().body(creditService.checkCredit(clientId, VehicleModel.valueOf(model)));
     }
 }

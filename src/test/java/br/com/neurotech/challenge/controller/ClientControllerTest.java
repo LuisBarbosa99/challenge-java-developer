@@ -58,6 +58,39 @@ public class ClientControllerTest {
                 .andExpect(status().isOk());
     }
 
+    @Test
+    public void givenSaveClient_whenNameIsBlank_thenReturnBadRequest() throws Exception {
+        var client = this.getClient();
+        client.setName("");
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/client")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(client)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void givenSaveClient_whenAgeIsNull_thenReturnBadRequest() throws Exception {
+        var client = this.getClient();
+        client.setAge(null);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/client")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(client)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void givenSaveClient_whenIncomeIsNull_thenReturnBadRequest() throws Exception {
+        var client = this.getClient();
+        client.setIncome(null);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/client")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(client)))
+                .andExpect(status().isBadRequest());
+    }
+
     private NeurotechClient getClient() {
         var client = new NeurotechClient();
         client.setName("João das Neves");
