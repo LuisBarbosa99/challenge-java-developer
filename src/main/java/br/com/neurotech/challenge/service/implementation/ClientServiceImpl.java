@@ -1,5 +1,8 @@
 package br.com.neurotech.challenge.service.implementation;
 
+import br.com.neurotech.challenge.entity.dto.CheckCreditDTO;
+import br.com.neurotech.challenge.entity.dto.ClientDTO;
+import br.com.neurotech.challenge.entity.dto.ClientMinifiedDTO;
 import br.com.neurotech.challenge.entity.model.Client;
 import br.com.neurotech.challenge.entity.enums.CreditType;
 import br.com.neurotech.challenge.entity.form.NeurotechClient;
@@ -7,6 +10,8 @@ import br.com.neurotech.challenge.exception.ClientNotFoundException;
 import br.com.neurotech.challenge.repository.ClientRepository;
 import br.com.neurotech.challenge.service.ClientService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ClientServiceImpl implements ClientService {
@@ -53,5 +58,18 @@ public class ClientServiceImpl implements ClientService {
         } else {
             throw new IllegalArgumentException("Cliente não se enquadra aos critérios");
         }
+    }
+
+    @Override
+    public List<ClientDTO> findAll() {
+        return clientRepository.findAll().stream()
+                .map(entity ->
+                        new ClientDTO(
+                                entity.getName(),
+                                entity.getAge(),
+                                entity.getIncome(),
+                                entity.getCreditType()
+                        ))
+                .toList();
     }
 }

@@ -1,6 +1,8 @@
 package br.com.neurotech.challenge.controller;
 
 import br.com.neurotech.challenge.entity.dto.CheckCreditDTO;
+import br.com.neurotech.challenge.entity.dto.ClientMinifiedDTO;
+import br.com.neurotech.challenge.entity.dto.ClientsAvailableForCreditDTO;
 import br.com.neurotech.challenge.entity.dto.ErrorDTO;
 import br.com.neurotech.challenge.entity.enums.VehicleModel;
 import br.com.neurotech.challenge.exception.ClientNotFoundException;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 import static br.com.neurotech.challenge.entity.util.Constants.ErrorCodes.CLIENT_NOT_FOUND;
 import static org.springframework.http.ResponseEntity.badRequest;
@@ -62,5 +66,24 @@ public class CreditController {
     @GetMapping
     public ResponseEntity<?> checkCredit(@RequestParam String clientId, @RequestParam String model) {
         return ok().body(creditService.checkCredit(clientId, VehicleModel.valueOf(model)));
+    }
+
+    @Operation(
+            summary = "Listar clientes disponíveis para crédito.",
+            description = "Lista os clientes disponíveis para receber crédito para modelo Hatch."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Clientes listados com sucesso.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ClientsAvailableForCreditDTO.class)
+            ))
+    })
+    @GetMapping("/list")
+    public ResponseEntity<?> list() {
+        var list = creditService.listAvailableForHatch();
+        return ok().body(new ClientsAvailableForCreditDTO(list));
     }
 }

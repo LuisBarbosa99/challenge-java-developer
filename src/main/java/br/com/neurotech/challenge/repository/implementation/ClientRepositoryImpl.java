@@ -4,7 +4,9 @@ import br.com.neurotech.challenge.entity.model.Client;
 import br.com.neurotech.challenge.repository.ClientRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -33,5 +35,10 @@ public class ClientRepositoryImpl implements ClientRepository {
             return Optional.of(clientMap.get(id));
         }
         return Optional.empty();
+    }
+
+    @Override
+    public List<Client> findAll() {
+        return new ArrayList<>(clientMap.values());
     }
 }

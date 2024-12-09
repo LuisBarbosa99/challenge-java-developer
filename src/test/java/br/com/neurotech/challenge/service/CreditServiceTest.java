@@ -1,5 +1,7 @@
 package br.com.neurotech.challenge.service;
 
+import br.com.neurotech.challenge.entity.dto.ClientDTO;
+import br.com.neurotech.challenge.entity.enums.CreditType;
 import br.com.neurotech.challenge.entity.form.NeurotechClient;
 import br.com.neurotech.challenge.entity.enums.VehicleModel;
 import br.com.neurotech.challenge.service.implementation.CreditServiceImpl;
@@ -7,6 +9,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mockito;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -98,6 +102,20 @@ public class CreditServiceTest {
         assertTrue(result.available());
     }
 
+    @Test
+    public void givenListAvailableForHatch_whenListUnavailableForHatch_thenReturnList() {
+        var clientList = List.of(
+                new ClientDTO("João", 19, 10000.0, CreditType.FIXED),
+                new ClientDTO("Maria", 25, 12000.0, CreditType.VARIABLE),
+                new ClientDTO("José", 30, 18000.0, CreditType.FIXED)
+        );
+        Mockito.when(clientService.findAll())
+                .thenReturn(clientList);
+
+        var availableList = creditService.listAvailableForHatch();
+        assertTrue(availableList.isEmpty());
+    }
+
     private NeurotechClient getClient() {
         var client = new NeurotechClient();
         client.setName("João das Neves");
@@ -106,4 +124,5 @@ public class CreditServiceTest {
 
         return client;
     }
+
 }
