@@ -7,13 +7,12 @@ import br.com.neurotech.challenge.service.implementation.ClientServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.mock;
 
 public class ClientServiceTest {
 
@@ -24,7 +23,7 @@ public class ClientServiceTest {
 
     @BeforeEach
     public void setUp() {
-        clientRepository = Mockito.mock(ClientRepository.class);
+        clientRepository = mock(ClientRepository.class);
         clientService = new ClientServiceImpl(clientRepository);
     }
 

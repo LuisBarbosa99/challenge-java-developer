@@ -36,6 +36,6 @@ public class ClientServiceImpl implements ClientService {
 
                     return client;
                 })
-                .orElse(null);
+                .orElse(null); //todo - lançar exception
     }
 }
