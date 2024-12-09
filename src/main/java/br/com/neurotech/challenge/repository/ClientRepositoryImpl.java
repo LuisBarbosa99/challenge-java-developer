@@ -8,7 +8,9 @@ import java.util.Optional;
 
 @Service
 public class ClientRepositoryImpl implements ClientRepository {
-
+    /**
+     * Hashmap usado para persistir em memória os dados dos clientes.
+     */
     private final HashMap<String, Client> clientMap;
 
     public ClientRepositoryImpl() {
@@ -19,8 +21,9 @@ public class ClientRepositoryImpl implements ClientRepository {
     public Client save(Client client) {
         var id = String.valueOf(clientMap.size() + 1);
         client.setId(id);
+        clientMap.put(id, client);
 
-        return clientMap.put(id, client);
+        return client;
     }
 
     @Override
