@@ -36,8 +36,8 @@ public class CreditServiceTest {
         Mockito.when(clientService.get(clientId))
                 .thenReturn(client);
 
-        boolean result = creditService.checkCredit(clientId, model);
-        assertFalse(result);
+        var result = creditService.checkCredit(clientId, model);
+        assertFalse(result.available());
     }
 
     @Test
@@ -51,8 +51,8 @@ public class CreditServiceTest {
         Mockito.when(clientService.get(clientId))
                 .thenReturn(client);
 
-        boolean result = creditService.checkCredit(clientId, model);
-        assertTrue(result);
+        var result = creditService.checkCredit(clientId, model);
+        assertTrue(result.available());
     }
 
 
@@ -67,8 +67,8 @@ public class CreditServiceTest {
         Mockito.when(clientService.get(clientId))
                 .thenReturn(client);
 
-        boolean result = creditService.checkCredit(clientId, model);
-        assertFalse(result);
+        var result = creditService.checkCredit(clientId, model);
+        assertFalse(result.available());
     }
 
     @Test
@@ -82,8 +82,8 @@ public class CreditServiceTest {
         Mockito.when(clientService.get(clientId))
                 .thenReturn(client);
 
-        boolean result = creditService.checkCredit(clientId, model);
-        assertFalse(result);
+        var result = creditService.checkCredit(clientId, model);
+        assertFalse(result.available());
     }
 
     @Test
@@ -94,8 +94,8 @@ public class CreditServiceTest {
         Mockito.when(clientService.get(clientId))
                 .thenReturn(getClient());
 
-        boolean result = creditService.checkCredit(clientId, model);
-        assertTrue(result);
+        var result = creditService.checkCredit(clientId, model);
+        assertTrue(result.available());
     }
 
     private NeurotechClient getClient() {

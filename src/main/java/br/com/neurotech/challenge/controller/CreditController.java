@@ -1,41 +1,63 @@
 package br.com.neurotech.challenge.controller;
 
+import br.com.neurotech.challenge.entity.CheckCreditDTO;
 import br.com.neurotech.challenge.entity.VehicleModel;
+import br.com.neurotech.challenge.exception.ClientNotFoundException;
 import br.com.neurotech.challenge.service.CreditService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import static org.springframework.http.ResponseEntity.badRequest;
 import static org.springframework.http.ResponseEntity.internalServerError;
 import static org.springframework.http.ResponseEntity.ok;
 
+@Tag(name = "Credit", description = "Operações de consulta de crédito.")
 @RestController
 @RequestMapping("/credit")
 public class CreditController {
 
     private final CreditService creditService;
 
-    private final ObjectMapper objectMapper;
-
     public CreditController(CreditService creditService) {
         this.creditService = creditService;
-        this.objectMapper = new ObjectMapper();
     }
 
+    @Operation(
+            summary = "Consultar crédito",
+            parameters = {
+                    @Parameter(name = "clientId", description = "Id do cliente."),
+                    @Parameter(name = "model", description = "Modelo do veículo.")
+            },
+            description = "Consulta o crédito disponível para um cliente."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Crédito consultado com sucesso.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = CheckCreditDTO.class)
+            )),
+    })
     @GetMapping
-    public ResponseEntity<JsonNode> checkCredit(@RequestParam String clientId, @RequestParam String model) {
+    public ResponseEntity<CheckCreditDTO> checkCredit(@RequestParam String clientId, @RequestParam String model) {
         try {
-            var isAvailable = creditService.checkCredit(clientId, VehicleModel.valueOf(model));
             return ok()
-                    .body(objectMapper.readTree(STR."{\"available\": \{isAvailable}}"));
-        } catch (JsonProcessingException e) {
-            return internalServerError()
-                    .build();
+                    .body(creditService.checkCredit(clientId, VehicleModel.valueOf(model)));
+        } catch (ClientNotFoundException e) {
+            return badRequest().build();
+        } catch (IllegalArgumentException e) {
+            return internalServerError().build();
         }
     }
 }

@@ -1,7 +1,9 @@
 package br.com.neurotech.challenge.service.implementation;
 
+import br.com.neurotech.challenge.entity.CheckCreditDTO;
 import br.com.neurotech.challenge.entity.NeurotechClient;
 import br.com.neurotech.challenge.entity.VehicleModel;
+import br.com.neurotech.challenge.exception.ClientNotFoundException;
 import br.com.neurotech.challenge.service.ClientService;
 import br.com.neurotech.challenge.service.CreditService;
 import org.springframework.stereotype.Service;
@@ -16,17 +18,17 @@ public class CreditServiceImpl implements CreditService {
     }
 
     @Override
-    public boolean checkCredit(String clientId, VehicleModel model) {
+    public CheckCreditDTO checkCredit(String clientId, VehicleModel model) {
         var client = clientService.get(clientId);
         if (client == null) {
-            //todo - lançar exception
-            return false;
+            throw new ClientNotFoundException();
         }
 
-        return switch (model) {
+        var isAvailable = switch (model) {
             case HATCH -> this.validateHatch(client);
             case SUV -> this.validateSUV(client);
         };
+        return new CheckCreditDTO(isAvailable);
     }
 
     private boolean validateSUV(NeurotechClient client) {

@@ -3,6 +3,7 @@ package br.com.neurotech.challenge.service.implementation;
 import br.com.neurotech.challenge.entity.Client;
 import br.com.neurotech.challenge.entity.CreditType;
 import br.com.neurotech.challenge.entity.NeurotechClient;
+import br.com.neurotech.challenge.exception.ClientNotFoundException;
 import br.com.neurotech.challenge.repository.ClientRepository;
 import br.com.neurotech.challenge.service.ClientService;
 import org.springframework.stereotype.Service;
@@ -38,7 +39,7 @@ public class ClientServiceImpl implements ClientService {
 
                     return client;
                 })
-                .orElse(null); //todo - lançar exception
+                .orElseThrow(ClientNotFoundException::new);
     }
 
     private CreditType defineCreditType(NeurotechClient client) {

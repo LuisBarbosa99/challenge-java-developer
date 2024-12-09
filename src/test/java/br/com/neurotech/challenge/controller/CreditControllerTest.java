@@ -1,9 +1,9 @@
 package br.com.neurotech.challenge.controller;
 
+import br.com.neurotech.challenge.entity.CheckCreditDTO;
 import br.com.neurotech.challenge.entity.VehicleModel;
 import br.com.neurotech.challenge.service.CreditService;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -29,7 +29,7 @@ public class CreditControllerTest {
         var model = "HATCH";
 
         when(creditService.checkCredit(id, VehicleModel.valueOf(model)))
-                .thenReturn(Boolean.TRUE);
+                .thenReturn(new CheckCreditDTO(true));
         mockMvc.perform(MockMvcRequestBuilders.get("/credit?clientId={id}&model={model}", id, model))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.available").value("true"));
