@@ -1,8 +1,8 @@
 package br.com.neurotech.challenge.service.implementation;
 
-import br.com.neurotech.challenge.entity.Client;
-import br.com.neurotech.challenge.entity.CreditType;
-import br.com.neurotech.challenge.entity.NeurotechClient;
+import br.com.neurotech.challenge.entity.model.Client;
+import br.com.neurotech.challenge.entity.enums.CreditType;
+import br.com.neurotech.challenge.entity.form.NeurotechClient;
 import br.com.neurotech.challenge.exception.ClientNotFoundException;
 import br.com.neurotech.challenge.repository.ClientRepository;
 import br.com.neurotech.challenge.service.ClientService;

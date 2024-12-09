@@ -1,5 +1,6 @@
-package br.com.neurotech.challenge.entity;
+package br.com.neurotech.challenge.entity.model;
 
+import br.com.neurotech.challenge.entity.enums.CreditType;
 import lombok.Data;
 
 @Data

@@ -1,6 +1,6 @@
 package br.com.neurotech.challenge.repository.implementation;
 
-import br.com.neurotech.challenge.entity.Client;
+import br.com.neurotech.challenge.entity.model.Client;
 import br.com.neurotech.challenge.repository.ClientRepository;
 import org.springframework.stereotype.Service;
 

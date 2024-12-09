@@ -1,6 +1,6 @@
 package br.com.neurotech.challenge.controller;
 
-import br.com.neurotech.challenge.entity.NeurotechClient;
+import br.com.neurotech.challenge.entity.form.NeurotechClient;
 import br.com.neurotech.challenge.exception.ClientNotFoundException;
 import br.com.neurotech.challenge.service.ClientService;
 import io.swagger.v3.oas.annotations.Operation;

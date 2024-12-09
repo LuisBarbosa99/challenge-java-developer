@@ -1,6 +1,6 @@
 package br.com.neurotech.challenge.repository;
 
-import br.com.neurotech.challenge.entity.Client;
+import br.com.neurotech.challenge.entity.model.Client;
 
 import java.util.Optional;
 

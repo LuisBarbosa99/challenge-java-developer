@@ -1,9 +1,9 @@
 package br.com.neurotech.challenge.service;
 
-import br.com.neurotech.challenge.entity.CheckCreditDTO;
+import br.com.neurotech.challenge.entity.dto.CheckCreditDTO;
 import org.springframework.stereotype.Service;
 
-import br.com.neurotech.challenge.entity.VehicleModel;
+import br.com.neurotech.challenge.entity.enums.VehicleModel;
 
 @Service
 public interface CreditService {

@@ -1,4 +1,4 @@
-package br.com.neurotech.challenge.entity;
+package br.com.neurotech.challenge.entity.form;
 
 import lombok.Data;
 

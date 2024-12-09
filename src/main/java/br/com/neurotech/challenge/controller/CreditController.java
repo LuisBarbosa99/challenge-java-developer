@@ -1,7 +1,8 @@
 package br.com.neurotech.challenge.controller;
 
-import br.com.neurotech.challenge.entity.CheckCreditDTO;
-import br.com.neurotech.challenge.entity.VehicleModel;
+import br.com.neurotech.challenge.entity.dto.CheckCreditDTO;
+import br.com.neurotech.challenge.entity.dto.ErrorDTO;
+import br.com.neurotech.challenge.entity.enums.VehicleModel;
 import br.com.neurotech.challenge.exception.ClientNotFoundException;
 import br.com.neurotech.challenge.service.CreditService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import static br.com.neurotech.challenge.entity.util.Constants.ErrorCodes.CLIENT_NOT_FOUND;
 import static org.springframework.http.ResponseEntity.badRequest;
 import static org.springframework.http.ResponseEntity.internalServerError;
 import static org.springframework.http.ResponseEntity.ok;
@@ -48,14 +50,21 @@ public class CreditController {
                             mediaType = "application/json",
                             schema = @Schema(implementation = CheckCreditDTO.class)
             )),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Erro ao consultar crédito.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorDTO.class)
+            )),
     })
     @GetMapping
-    public ResponseEntity<CheckCreditDTO> checkCredit(@RequestParam String clientId, @RequestParam String model) {
+    public ResponseEntity<?> checkCredit(@RequestParam String clientId, @RequestParam String model) {
         try {
             return ok()
                     .body(creditService.checkCredit(clientId, VehicleModel.valueOf(model)));
         } catch (ClientNotFoundException e) {
-            return badRequest().build();
+            return badRequest().body(new ErrorDTO(CLIENT_NOT_FOUND, e.getMessage()));
         } catch (IllegalArgumentException e) {
             return internalServerError().build();
         }

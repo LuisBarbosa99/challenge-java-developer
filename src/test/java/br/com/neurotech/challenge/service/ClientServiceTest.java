@@ -1,7 +1,7 @@
 package br.com.neurotech.challenge.service;
 
-import br.com.neurotech.challenge.entity.Client;
-import br.com.neurotech.challenge.entity.NeurotechClient;
+import br.com.neurotech.challenge.entity.model.Client;
+import br.com.neurotech.challenge.entity.form.NeurotechClient;
 import br.com.neurotech.challenge.repository.ClientRepository;
 import br.com.neurotech.challenge.service.implementation.ClientServiceImpl;
 import org.junit.jupiter.api.BeforeEach;

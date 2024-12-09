@@ -1,7 +1,7 @@
 package br.com.neurotech.challenge.controller;
 
-import br.com.neurotech.challenge.entity.CheckCreditDTO;
-import br.com.neurotech.challenge.entity.VehicleModel;
+import br.com.neurotech.challenge.entity.dto.CheckCreditDTO;
+import br.com.neurotech.challenge.entity.enums.VehicleModel;
 import br.com.neurotech.challenge.service.CreditService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
