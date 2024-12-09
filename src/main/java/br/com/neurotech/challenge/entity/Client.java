@@ -8,5 +8,6 @@ public class Client {
     private String name;
     private Integer age;
     private Double income;
+    private CreditType creditType;
 }
 

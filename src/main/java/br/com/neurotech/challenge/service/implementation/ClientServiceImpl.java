@@ -1,6 +1,7 @@
 package br.com.neurotech.challenge.service.implementation;
 
 import br.com.neurotech.challenge.entity.Client;
+import br.com.neurotech.challenge.entity.CreditType;
 import br.com.neurotech.challenge.entity.NeurotechClient;
 import br.com.neurotech.challenge.repository.ClientRepository;
 import br.com.neurotech.challenge.service.ClientService;
@@ -21,6 +22,7 @@ public class ClientServiceImpl implements ClientService {
         entity.setName(client.getName());
         entity.setAge(client.getAge());
         entity.setIncome(client.getIncome());
+        entity.setCreditType(this.defineCreditType(client));
 
         return clientRepository.save(entity).getId();
     }
@@ -37,5 +39,18 @@ public class ClientServiceImpl implements ClientService {
                     return client;
                 })
                 .orElse(null); //todo - lançar exception
+    }
+
+    private CreditType defineCreditType(NeurotechClient client) {
+        if (client.getAge() > 18 && client.getAge() <= 25) {
+            return CreditType.FIXED;
+        } else if (client.getAge() > 21 && client.getAge() <= 65
+                && client.getIncome() > 5000.00 && client.getIncome() <= 15000.00) {
+            return CreditType.VARIABLE;
+        } else if (client.getAge() > 65) {
+            return CreditType.PAYROLL;
+        } else {
+            throw new IllegalArgumentException("Cliente não se enquadra aos critérios");
+        }
     }
 }
