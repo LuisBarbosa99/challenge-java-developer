@@ -37,4 +37,10 @@ public class DefaultExceptionHandler {
         return ResponseEntity.badRequest()
                 .body(new ErrorDTO(ErrorCodes.VEHICLE_MODEL_NOT_FOUND, ErrorMessages.VEHICLE_MODEL_NOT_FOUND));
     }
+
+    @ExceptionHandler(InvalidCreditTypeException.class)
+    public ResponseEntity<ErrorDTO> handleInvalidCreditTypeException(InvalidCreditTypeException ex) {
+        return ResponseEntity.badRequest()
+                .body(new ErrorDTO(ErrorCodes.CREDIT_TYPE_UNAVAILABLE, ErrorMessages.CREDIT_TYPE_UNAVAILABLE));
+    }
 }

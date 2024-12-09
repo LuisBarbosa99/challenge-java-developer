@@ -7,6 +7,7 @@ import br.com.neurotech.challenge.entity.model.Client;
 import br.com.neurotech.challenge.entity.enums.CreditType;
 import br.com.neurotech.challenge.entity.form.NeurotechClient;
 import br.com.neurotech.challenge.exception.ClientNotFoundException;
+import br.com.neurotech.challenge.exception.InvalidCreditTypeException;
 import br.com.neurotech.challenge.repository.ClientRepository;
 import br.com.neurotech.challenge.service.ClientService;
 import org.springframework.stereotype.Service;
@@ -56,7 +57,7 @@ public class ClientServiceImpl implements ClientService {
         } else if (client.getAge() > 65) {
             return CreditType.PAYROLL;
         } else {
-            throw new IllegalArgumentException("Cliente não se enquadra aos critérios");
+            throw new InvalidCreditTypeException();
         }
     }
 
