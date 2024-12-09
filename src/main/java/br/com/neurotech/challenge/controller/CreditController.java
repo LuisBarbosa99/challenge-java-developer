@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import static org.springframework.http.ResponseEntity.internalServerError;
+import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 @RequestMapping("/credit")
@@ -30,7 +31,7 @@ public class CreditController {
     public ResponseEntity<JsonNode> checkCredit(@RequestParam String clientId, @RequestParam String model) {
         try {
             var isAvailable = creditService.checkCredit(clientId, VehicleModel.valueOf(model));
-            return ResponseEntity.ok()
+            return ok()
                     .body(objectMapper.readTree(STR."{\"available\": \{isAvailable}}"));
         } catch (JsonProcessingException e) {
             return internalServerError()
